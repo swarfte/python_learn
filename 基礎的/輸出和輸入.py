@@ -15,3 +15,4 @@ print('hello, world')
 #*输入
 #%Python提供了一个input()，可以让用户输入字符串，并存放到一个变量里,括號內為輸入說明(提示輸入)
 print(input("輸入名字"))
+#

@@ -2,8 +2,8 @@
 Author: Swarfte_Tou
 Date: 2021-05-09 21:26:19
 LastEditors: Swarfte_Tou
-LastEditTime: 2021-05-09 21:49:06
-FilePath: \python\python_learn\列表的切片.py
+LastEditTime: 2021-05-09 22:20:24
+FilePath: \python\python_learn\基礎的\列表的切片.py
 FileOutput: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
 GithubName: Swarfte
 GithubURL: https://github.com/swarfte/Swarfte.git
@@ -22,3 +22,4 @@ A2 = Z[::5]#*由頭到尾,每5個元素取一個(每隔四個元素取一次)
 print(A2)
 LZ = Z[::-1]#*由頭到尾,整數順序反轉,然後每1個元素取1個
 print(LZ)
+#

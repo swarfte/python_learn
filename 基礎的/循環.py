@@ -43,3 +43,4 @@ while n < 10:
         continue # continue语句会直接继续下一轮循环，后续的print()语句不会执行
     print(n)
     
+#

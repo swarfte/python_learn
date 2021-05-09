@@ -2,8 +2,8 @@
 Author: Swarfte_Tou
 Date: 2021-05-09 19:30:11
 LastEditors: Swarfte_Tou
-LastEditTime: 2021-05-09 20:04:11
-FilePath: \python\python_learn\列表.py
+LastEditTime: 2021-05-09 22:20:35
+FilePath: \python\python_learn\基礎的\列表和元祖.py
 FileOutput: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
 GithubName: Swarfte
 GithubURL: https://github.com/swarfte/Swarfte.git
@@ -42,3 +42,4 @@ t = ('a', 'b', ['A', 'B'])
 t[2][0] = 'X'
 t[2][1] = 'Y'
 print(t)#*雖然內容變了,但是第1層(元祖那層)沒有變化,變化的是list那層的元素
+#

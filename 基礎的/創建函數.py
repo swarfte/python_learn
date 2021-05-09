@@ -2,8 +2,8 @@
 Author: Swarfte_Tou
 Date: 2021-05-09 21:06:57
 LastEditors: Swarfte_Tou
-LastEditTime: 2021-05-09 21:17:58
-FilePath: \python\python_learn\創建函數.py
+LastEditTime: 2021-05-09 22:20:51
+FilePath: \python\python_learn\基礎的\創建函數.py
 FileOutput: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
 GithubName: Swarfte
 GithubURL: https://github.com/swarfte/Swarfte.git
@@ -46,4 +46,4 @@ def person(name, age, **kw):#*此處kw為關鍵字参数,在调用该函数时�
 #%如果要限制关键字参数的名字，就可以用命名关键字参数
 def person(name, age, *, city, job):#*命名关键字参数需要一个特殊分隔符*，*后面的参数被视为命名关键字参数
     print(name, age, city, job)
-    
+#
