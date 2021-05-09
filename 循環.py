@@ -2,7 +2,7 @@
 Author: Swarfte_Tou
 Date: 2021-05-09 19:43:31
 LastEditors: Swarfte_Tou
-LastEditTime: 2021-05-09 20:02:54
+LastEditTime: 2021-05-09 21:53:15
 FilePath: \python\python_learn\循環.py
 FileOutput: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
 GithubName: Swarfte
@@ -12,6 +12,11 @@ GithubLazy: git init git commit -m git push -u
 L = [1,2,3]
 for x in L : #*創建一個變量x,依次由L中提取元素
     print(x)
+print([x for x in L])#*各種推導式也循環的一種
+    
+LO = [["x",1],["y",2],["z",3]]
+for x,y in LO :#*能支援多個變量
+    print(x,y)
 
 #*第二种循环是while循环，只要条件满足，就不断循环，条件不满足时退出循环
 sum = 0
