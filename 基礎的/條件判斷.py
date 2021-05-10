@@ -2,7 +2,7 @@
 Author: Swarfte_Tou
 Date: 2021-05-09 19:40:54
 LastEditors: Swarfte_Tou
-LastEditTime: 2021-05-09 22:20:43
+LastEditTime: 2021-05-09 22:27:27
 FilePath: \python\python_learn\基礎的\條件判斷.py
 FileOutput: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
 GithubName: Swarfte
@@ -33,4 +33,3 @@ else:#%全都不是的情況
 x= 2
 if x:#*只要x是非零数值、非空字符串、非空list等，就判断为True，否则为False。
     print('True')
-    #
