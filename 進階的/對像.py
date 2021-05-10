@@ -2,7 +2,7 @@
 Author: Swarfte_Tou
 Date: 2021-05-10 21:32:01
 LastEditors: Swarfte_Tou
-LastEditTime: 2021-05-10 22:49:10
+LastEditTime: 2021-05-10 22:53:31
 FilePath: \python\python_learn\進階的\對像.py
 FileOutput: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
 GithubName: Swarfte
@@ -16,13 +16,13 @@ class people (object) :#*名為people的對像,繼續object類
         self.money = money
         self.__gender = gender #*變量名前加__表示該變量為私有變量,即不能被外部詢問
     
-    def say(self) :#*對像的方法需要先放入self,再跟其他變量,__init__同理
+    def say(self) :#*對像的方法需要先放入self,再跟其他變量,__init__同理 
         print(f"{self.name},你好")
         
     def get_gender (self):#*外部獲得__gender這個私有變量的方法
         return self.__gender
     
-a = people("ben",800,"male")#*a為people對像的實例
+a = people("ben",800,"male")#*a為people對像的實例 ##類的其中一個特點:封裝 每個實例都有不同的數據
 print(a)#*返回的是實例化後的people
 print(a.name)#*輸出a對像中name的屬性的值
 print(a.say())#*輸入a對像中的方法(say),調用對像的方法時需要要括號
