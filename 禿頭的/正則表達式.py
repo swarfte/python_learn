@@ -2,7 +2,7 @@
 Author: Swarfte_Tou
 Date: 2021-05-14 18:55:43
 LastEditors: Swarfte_Tou
-LastEditTime: 2021-05-15 13:54:28
+LastEditTime: 2021-05-16 12:53:47
 FilePath: \Python\python_learn\禿頭的\正則表達式.py
 FileOutput: pyinstaller -F -w file_name.py -p C:/python/lib/site-packages 
 GithubName: Swarfte
@@ -29,9 +29,9 @@ f = re.search(r"\d",STR)#*在正則表達式中,\d表示匹配數字,等價於[0
 print(f"f :{f}")
 g = re.search(r"[aeiou]",STR)#*[]內的為字符類,同時在字符類的元字符都失去了特殊功廳,只要資料中出現與[]內相同的字符,則匹配成立
 print(f"g :{g}")
-h = re.search(r"[a-z]",STR)#*可以用"-"號表示匹配範圍
+h = re.search(r"[a-z]",STR)#*"-"號表示範圍 數字也能表示範圍
 print(f"h :{h}")
-i = re.search(r"[0-9]\.[a-z][a-z][a-z]",STR)#*"-"號表示範圍 數字也能表示範圍
+i = re.findall(r"[0-9]\.[a-z][a-z][a-z]",STR)#*findall和search很像,但不同的是,findall會翻回一個列表,包含所有成功匹配的值,而search則會翻回會一個對像
 print(f"i :{i}")
 j = re.search(r"[sch]{3}.{3}",STR)#*在正則表達式中,用{}表示該篩選條件的重覆次數
 print(f"j :{j}")
@@ -72,21 +72,40 @@ y = re.search(r"[^a-z]+",STR)#* 在[]號,"^"號能表示取反的意思,即匹�
 print(f"y :{y}")
 z = re.search(r"\bby\b",STR)#* \b表示匹配一個單詞的邊界, 即表示 "by" 這個字串前後不能是字母/空格/下劃線才會匹配成功
 print(f"z: {z}")
+
+#%利用group()方法獲取匹配的字符串
 AA = re.search(r"\bshool\b",STR)#*這時匹配不成功,因為school後跟了s ,這表示school並不是一個獨立的單詞
-print(f"AA :{AA}")
+print(f"AA :{AA}")#*None值不能用group()
 BB = re.search(r"\Briend\B",STR)#* \B的作用興\b相反,用作匹配非單詞邊界,即 "riend" 的前後要跟英文字母/數字才會匹配成功
-print(f"BB :{BB}")
+print(f"BB :{BB} : {BB.group()}")
 CC =re.search(r"\D+",STR)#* \D的作用剛好和\d相反,匹配非數字的字符,等價於[^0-9]
-print(f"CC :{CC}")
+print(f"CC :{CC} : {CC.group()}")
 DD = re.search(r"\D\s\d",STR)#* \s表示匹配任何空白字符
-print(f"DD :{DD}")
-EE = re.search(r"\d\S+",STR)#* \S則表示匹配任何非空白字符
-print(f"EE :{EE}")
+print(f"DD :{DD} : {DD.group()}")
+EE = re.search(r"(\d)(\S)+",STR)#* \S則表示匹配任何非空白字符
+print(f"EE :{EE} : {EE.group(1)}")#&如果表達式中有子組(小括號),那麼group()中設置序號可以提取對應子組的內容
 FF = re.search(r"\t",STR)#* \t表示匹配tab鍵(默認4個空格)
-print(f"FF :{FF}")
+print(f"FF :{FF} ")
 GG = re.search(r"\n\s\S+",STR) #* \n 表示匹配換行,即字符串中的\n
-print(f"GG :{GG}")
+print(f"GG :{GG} : {GG.start()}")#&start()方法表示匹配開始的位置
 HH = re.search(r"\d\w+",STR)#* \w表示匹配單詞,即中英數都能匹配,但會被空格等符號限制
-print(f"HH :{HH}")#*和\S+不同,/w遇到標點符號便會停止
+print(f"HH :{HH} : {HH.group()}")#*和\S+不同,/w遇到標點符號便會停止
 II = re.search(r"\W+",STR)#* \W和\w 相反,用作匹配標點符號和空格等字符
-print(f"II :{II}")
+print(f"II :{II} : {II.end()}")#&end()方法表示匹配結束的位置
+
+DBS = "benbenben"
+
+JJ = re.search(r"(ben)\1",DBS) #* \1等價於benben
+print(f"JJ :{JJ} : {JJ.span()}/")#&span()方法翻回匹配的範圍
+
+#%編譯正則表達式
+check = re.compile("[ben]+")#*利用compile記錄一條表達式
+KK = check.search(STR)
+print(f"KK :{KK} : {KK.group()}")
+
+#%利用re.VERBOSE 更人性化的編寫匹配規則
+check_verbose = re.compile(r"""
+    [a-z]+ \s \D+ \s [a-z]+ #*使用re.VERBOSE在編寫規則時可以無視空格且使用註解
+    """,re.VERBOSE)#*VERBOSE用作啟用詳細的正則表達式
+LL = check_verbose.search(STR)
+print(f"LL :{LL} : {LL.group()}")
