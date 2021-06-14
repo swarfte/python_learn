@@ -1,6 +1,7 @@
 import socket as sk
 #%通常我们用一个Socket表示“打开了一个网络链接”，而打开一个Socket需要知道目标计算机的IP地址和端口号，再指定协议类型即可
-s = sk.socket(sk.AF_INET,sk.SOCK_STREAM)#*建立一個socket
+#%客户端要主动发起TCP连接，必须知道服务器的IP地址和端口号
+s = sk.socket(sk.AF_INET,sk.SOCK_STREAM)#*建立一個socket,TCP使用的是SOCK_STREAM
 url = "www.sina.com.cn"
 port = 80
 s.connect((url,port))#*用作用連接伺服器,用元祖表示網
