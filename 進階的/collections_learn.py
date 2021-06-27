@@ -51,4 +51,3 @@ KK = ct.Counter()#*創建一個計數器
 for x in "i go to school by bus" :
     KK[x] += 1
 print(KK)#*連空白字符也會統計
-
