@@ -32,4 +32,28 @@ GithubLazy: git init git commit -m git push -u
 # print(b)#*B為以4為參數的double函式的生成器
 # print(list(b))#*a的值為3125,第一次的j為25,第2次的J為625,第3次為390625,第3次時j> a ,則只輸出頭2次結果
 
-#print(sum([x for x in (y for y in (z for z in range(10))if y % 2 == 0 ) if x % 3 == 0]))#*列表推導式和生成器能一起用
+# print(sum([x for x in (y for y in (z for z in range(10))if y % 2 == 0 ) if x % 3 == 0]))#*列表推導式和生成器能一起用
+
+# 定義建立生成器函式
+# def test():
+#     print("time 1")
+#     yield 5
+#     print("time 2")
+#     yield 10
+
+# # 呼叫並回傳生成器
+# gen = test()
+# # 配搭for 迴圈使用
+# for x in gen:
+#     print(x) #輸出5
+def generateEven(maxnumber):
+    number = 0
+    while number <= maxnumber:# 沒有限制次數 每次生成的數字比上一個多2
+        yield number
+        number += 2
+    print(f"final number: {number}")
+
+number = generateEven(100)
+for x in number:
+    print(x) #
+    
