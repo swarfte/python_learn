@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h2>{{ the_title }}</h2>
+
+<table>
+    <tr>
+        {% for row_title in the_row_titles %} <!--創建n欄,顯示數據不同的屬性-->
+        <th>{{row_title}}</th><!--傳戊指定的列標題-->
+        {% endfor %}
+    </tr>
+    {% for log_row in the_data %}<!--創造n行數據-->
+    <tr>
+        {% for item in log_row %}
+        <td>{{item}}</td><!--依次放入對應的數據-->
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
