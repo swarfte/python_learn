@@ -59,12 +59,12 @@
 
 # #------------------------------------------------------------------------------------
 
-# #定義裝飾器
-# # def 裝飾器名稱(回呼函式名稱):
-# #   def 內部裝飾器名稱():
-# #       #裝飾器內部的程式碼
-# #       回呼函式名稱
-# #   return 內部裝飾器名稱
+# 定義裝飾器
+# def 裝飾器名稱(回呼函式名稱):
+#   def 內部裝飾器名稱():
+#       #裝飾器內部的程式碼
+#       回呼函式名稱
+#   return 內部裝飾器名稱
 
 # def myDeco(callback):
 #     def run():
@@ -92,26 +92,31 @@
 
 # testing()
 
-#定義一個裝飾器,計算1+2+...+50的總和
+# 定義一個裝飾器,計算1+2+...+50的總和
 def calculate(callback):
     def run():
-        #裝飾器想要執行的程式碼
+        # 裝飾器想要執行的程式碼
         result = 0
         for x in range(51):
             result += x
-        #把計算的結果傳入被裝飾的普通裝飾中
+        # 把計算的結果傳入被裝飾的普通裝飾中
         callback(result)
+
     return run
 
-#使用裝飾器
+
+# 使用裝飾器
 @calculate
 def show(n):
-    print("計算結果是 ",n)
+    print("計算結果是 ", n)
+
 
 show()
 
+
 @calculate
 def englishShow(n):
-    print("the calculate answer is ",n)
+    print("the calculate answer is ", n)
+
 
 englishShow()

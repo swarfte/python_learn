@@ -1,0 +1,14 @@
+import mysql.connector
+
+
+class UseDatabase(object):
+    def __init__(self, config: dict) -> None:
+        self.configuration = config
+
+    def __enter__(self) -> 'cursor':
+        self.conn = mysql.connector.connect(self.configuration)
+        self.cursor = self.conn.cursor()
+        return self.cursor
+
+    def __exit__(self):
+        pass
