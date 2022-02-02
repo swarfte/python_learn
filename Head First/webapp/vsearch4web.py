@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, copy_current_request_context
 from vsearch import search4letters
-from DBcm import UseDatabase
+from DBcm import UseDatabase, ConnectionError, CredentialsError, SQLError
 from checker import check_logged_in
+from threading import Thread
 
 app = Flask(__name__)
 app.config['dbconfig'] = {
@@ -49,27 +50,33 @@ app.config['dbconfig'] = {
 #     curses.close()
 #     conn.close()
 
-def log_request(req: 'flask_request', res: str) -> None:
-    """log details of the web request and the results"""
-    with UseDatabase(app.config['dbconfig']) as cursor:
-        _SQL = """insert into log
-                     (phrase,letters,ip,browser_string,results)
-                     values
-                     (%s,%s,%s,%s,%s)"""
-        cursor.execute(_SQL, (req.form['phrase'],
-                              req.form['letters'],
-                              req.remote_addr,
-                              req.user_agent.browser,
-                              res))
-
 
 @app.route('/search4', methods=["POST"])  # methods用於通訊的方法
 def do_search() -> 'html':  # 提示回傳的內容是html
+    @copy_current_request_context
+    def log_request(req: 'flask_request', res: str) -> None:
+        """log details of the web request and the results"""
+        with UseDatabase(app.config['dbconfig']) as cursor:
+            _SQL = """insert into log
+                         (phrase,letters,ip,browser_string,results)
+                         values
+                         (%s,%s,%s,%s,%s)"""
+            cursor.execute(_SQL, (req.form['phrase'],
+                                  req.form['letters'],
+                                  req.remote_addr,
+                                  req.user_agent.browser,
+                                  res))
+
     phrase = request.form["phrase"]  # 獲取來源html中<form>標籤內name=phrase的<input>標籤內容
     letters = request.form["letters"]  # 獲取來源html中<form>標籤內name=letters的<input>標籤內容
     title = "Here are your results:"
     results = str(search4letters(phrase, letters))  # 把回傳的set類型轉換為str方便處理
-    log_request(request, results)
+    try:
+        t = Thread(target=log_request, args=(request, results))
+        t.start()
+    except Exception as err:
+        print('***** Logging failed with this error:', str(err))
+
     return render_template('results.html',  # 返回一個網頁,此處使用results模版
                            the_title=title,  # 把python中的變量傳入模中對應的jinja2變量
                            the_phrase=phrase,
@@ -103,17 +110,27 @@ def entry_page() -> 'html':
 
 @app.route('/viewlog')
 def view_the_log() -> 'html':
-    with UseDatabase(app.config['dbconfig']) as cursor:
-        _SQL = """select phrase,letters,ip,browser_string,results
-        from log"""
-        cursor.execute(_SQL)
-        contents = cursor.fetchall()
-        titles = ('Phrase', 'Letters', 'Remote_addr', 'User_agent', 'Results')
-        return render_template('viewlog.html',
-                               the_title='View Log',
-                               the_row_titles=titles,
-                               the_data=contents
-                               )
+    try:
+        with UseDatabase(app.config['dbconfig']) as cursor:
+            _SQL = """select phrase,letters,ip,browser_string,results
+            from log"""
+            cursor.execute(_SQL)
+            contents = cursor.fetchall()
+            titles = ('Phrase', 'Letters', 'Remote_addr', 'User_agent', 'Results')
+            return render_template('viewlog.html',
+                                   the_title='View Log',
+                                   the_row_titles=titles,
+                                   the_data=contents
+                                   )
+    except ConnectionError as err:
+        print('Is your database switched on? Error: ', str(err))
+    except CredentialsError as err:
+        print('User-id/Password issues. Error: ', str(err))
+    except SQLError as err:
+        print('Is your query correct? Error: ', str(err))
+    except Exception as err:
+        print('Something went wrong: ', str(err))
+    return 'Error'
 
 
 @app.route('/')
