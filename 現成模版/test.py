@@ -1,5 +1,6 @@
 from functools import wraps
-from template_decorator_factory_class import BaseDecorator
+from decorators import BaseDecorator
+from template_object_decorator_factory import DecoratorFactoryName as DFN
 
 
 def check(variable):  # 在這裡修改裝飾器工廠的名稱
@@ -23,16 +24,34 @@ def check(variable):  # 在這裡修改裝飾器工廠的名稱
     return decorator_name
 
 
+class log(BaseDecorator):
+    def __init__(self, *args, **kwargs):
+        super(log, self).__init__(*args, **kwargs)
+
+    def before_invoke(self):
+        print("start")
+
+    def after_invoke(self):
+        print("end")
+
+
 # @check(5)
 def double(n):
     return n ** 2
 
-@BaseDecorator('test')
+@DFN(123)
 def three(n):
-    print(n*3)
+    print(n * 3)
+    return (n)
+
+
+@log(456)
+def four(n):
+    print(n * 4)
     return (n)
 
 if __name__ == '__main__':
     # print(double(5))
     three(3)
+    four(5)
     pass
